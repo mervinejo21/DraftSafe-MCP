@@ -1,36 +1,49 @@
 
-````markdown
-# 🛡️ Sentinel-MCP
-### Autonomous AI Compliance Auditor
+🛡️ Sentinel-MCP
 
-**Sentinel-MCP** is a full-stack AI application designed to demonstrate the power of the **Model Context Protocol (MCP)** in enterprise security. It features a **LangGraph** ReAct agent that autonomously audits user content by connecting to a custom-built MCP security server.
+Autonomous AI Compliance Auditor
+Sentinel-MCP is a full-stack AI application that leverages the Model Context Protocol (MCP) to audit sensitive data. It uses a LangGraph ReAct agent to autonomously decide when to trigger security scans via a custom-built MCP server, providing real-time compliance feedback through a modern Next.js dashboard.
 
-## 🏗️ System Architecture
+🚀 Technical Stack
+AI Orchestration: LangGraph (Python)
 
-- **Frontend:** Next.js 15 (App Router, Tailwind CSS v4, TypeScript)
-- **API Layer:** FastAPI (Python) serving as the bridge between Web and AI logic.
-- **AI Orchestration:** LangGraph implementing a ReAct (Reasoning + Acting) loop.
-- **Model:** Mistral Large 3 (via Mistral AI)
-- **Protocol:** Model Context Protocol (MCP) for secure tool-calling.
+Model: Mistral Large 3 (via Mistral AI API)
 
-## 🛠️ Installation & Setup
+Protocol: Model Context Protocol (MCP)
 
-### 1. Prerequisites
-- **Python 3.12+** (Managed via [uv](https://github.com/astral-sh/uv))
-- **Node.js v20+**
-- **Mistral AI API Key**
+Backend: FastAPI (Python)
 
-### 2. Backend Installation
-From the root directory (`Sentinel-MCP`):
+Frontend: Next.js 15 (Tailwind CSS v4, TypeScript)
 
-```powershell
-# Install Python dependencies
+Environment: uv (Fast Python package manager)
+
+🏗️ Architecture
+Next.js UI: A high-end cybersecurity dashboard for user interaction.
+
+FastAPI Bridge: Handles requests and streams agentic thoughts to the frontend.
+
+LangGraph Agent: A ReAct agent that evaluates content and determines if the check_compliance tool is required.
+
+Sentinel MCP Server: A specialized server that implements local security rules and logic, exposed via the Model Context Protocol.
+
+🛠️ Installation & Setup
+1. Prerequisites
+Ensure you have uv installed (modern Python manager) and Node.js (v20+).
+
+2. Backend Setup
+
+```
+# Clone the repository
+git clone https://github.com/your-username/Sentinel-MCP.git
+cd Sentinel-MCP
+
+# Create environment and install dependencies
 uv sync
 
-# Create your environment configuration
-# Open .env and add your MISTRAL_API_KEY
-echo "MISTRAL_API_KEY=your_actual_key_here" > .env
-````
+# Setup Environment Variables
+# Create a .env file and add:
+MISTRAL_API_KEY=your_api_key_here
+```
 
 ### 3\. Frontend Installation
 
