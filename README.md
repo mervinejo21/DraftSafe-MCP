@@ -47,7 +47,7 @@ echo "MISTRAL_API_KEY=your_api_key_here" > .env
 
 ```
 
-###3. Frontend Installation
+### 3. Frontend Installation
 In a new terminal, navigate to the UI directory:
 
 ```powerShell
@@ -69,7 +69,7 @@ npm run dev
 ```
 The application will be available at: http://localhost:3000
 
-##🛡️ **Core Capabilities**
+## 🛡️ Core Capabilities
 The system utilizes a custom MCP Server (server.py) to execute local logic that identifies "Template Embarrassment" risks:
 
 Placeholder Detection: Identifies [Bracketed], <Angle>, and INSERT HERE tags.
@@ -78,7 +78,7 @@ Autonomous Reasoning: The AI agent only triggers the scanner when it detects tha
 
 Typewriter Feedback: Results are streamed back to the right-hand panel with a modern typewriter effect.
 
-##📁 **Project Structure**
+## 📁 Project Structure
 /ui: Next.js frontend application with Black & Purple theme.
 
 server.py: The MCP Server defining the scanning tools.
