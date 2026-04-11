@@ -10,6 +10,7 @@ dependencies = [
     "langchain-mcp-adapters>=0.2.2",
     "langchain-mistralai>=1.1.2",
     "langgraph>=1.1.6",
+    "mcp>=1.27.0",
     "python-dotenv>=1.2.2",
     "uvicorn>=0.44.0",
 ]

@@ -1,94 +1,131 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function SentinelDashboard() {
+export default function DraftSafe() {
   const [content, setContent] = useState("");
   const [result, setResult] = useState<string | null>(null);
+  const [displayedText, setDisplayedText] = useState("");
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("Idle");
 
-  const handleAudit = async () => {
+  // Typewriter Effect logic
+  useEffect(() => {
+    if (result) {
+      setDisplayedText("");
+      let i = 0;
+      const interval = setInterval(() => {
+        setDisplayedText((prev) => prev + result.charAt(i));
+        i++;
+        if (i >= result.length) clearInterval(interval);
+      }, 20);
+      return () => clearInterval(interval);
+    }
+  }, [result]);
+
+  const handleCheck = async () => {
     setLoading(true);
+    setResult(null);
+    setDisplayedText("");
+    setStatus("Reading Draft...");
+    
     try {
-      // This will talk to your FastAPI server on port 8000
-      const res = await fetch("http://localhost:8000/audit", {
+      const res = await fetch("http://127.0.0.1:8000/audit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content }),
       });
+      
+      setStatus("Analyzing Patterns...");
       const data = await res.json();
-      setResult(data.result || data.detail);
+      
+      setTimeout(() => {
+        setResult(data.result);
+        setStatus("Analysis Complete");
+        setLoading(false);
+      }, 800); // Small delay to show the "thinking" state
+      
     } catch (err) {
-      setResult("❌ Failed to connect to Sentinel Backend. Ensure api.py is running.");
+      setResult("❌ Connection Error: Is the Python API running?");
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
-    <main className="min-h-screen bg-[#020617] text-slate-100 p-4 md:p-12 font-sans">
-      <div className="max-w-5xl mx-auto">
-        {/* Header Section */}
-        <div className="flex justify-between items-center mb-8 border-b border-slate-800 pb-6">
-          <div>
-            <h1 className="text-3xl font-extrabold tracking-tighter text-blue-500">
-              SENTINEL<span className="text-slate-500">.MCP</span>
-            </h1>
-            <p className="text-slate-400 text-sm">Autonomous Compliance & Security Auditor</p>
-          </div>
-          <div className="hidden md:block px-3 py-1 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-xs font-mono">
-            SYSTEM ONLINE
-          </div>
+    <main className="min-h-screen bg-background text-primaryForeground p-6 md:p-12 font-sans">
+      <div className="max-w-7xl mx-auto">
+        
+        {/* Header */}
+        <div className="flex items-center space-x-4 mb-10">
+          <h1 className="text-3xl font-black italic tracking-tighter text-primary">DRAFT.SAFE</h1>
+          <div className="h-px flex-1 bg-card/60"></div>
+          <span className="text-[10px] uppercase tracking-[0.3em] text-twilight/50">Version 2.0 Alpha</span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Input Area */}
-          <div className="lg:col-span-2 space-y-4">
-            <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6 shadow-xl">
-              <label className="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">
-                Input Stream
-              </label>
-              <textarea 
-                className="w-full h-64 bg-slate-950/50 border border-slate-700 rounded-lg p-4 font-mono text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all outline-none resize-none"
-                placeholder="Paste code, logs, or messages to audit..."
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-              />
-              <button 
-                onClick={handleAudit}
-                disabled={loading}
-                className="mt-4 w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg transition-all transform active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-900/20"
-              >
-                {loading ? "PROCESSING..." : "EXECUTE SECURITY AUDIT"}
-              </button>
+        {/* Main Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          
+          {/* Left Side: Input */}
+          <div className="space-y-4">
+            <div className="relative group">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-twilight rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+              <div className="relative bg-card border border-card/60 rounded-2xl overflow-hidden">
+                <textarea 
+                  className="w-full h-[500px] p-6 text-lg outline-none resize-none bg-transparent font-light leading-relaxed"
+                  placeholder="Paste your draft here..."
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                />
+                <div className="p-4 bg-background/50 border-t border-card/60 flex justify-between items-center">
+                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Input Stream</span>
+                  <button 
+                    onClick={handleCheck}
+                    disabled={loading || !content}
+                    className="bg-primary hover:bg-violet-600 text-white px-8 py-2 rounded-lg font-bold transition-all active:scale-95 disabled:opacity-30"
+                  >
+                    {loading ? "PROCESSING..." : "RUN ANALYSIS"}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Results Area */}
-          <div className="lg:col-span-1">
-            <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6 h-full min-h-[400px]">
-              <label className="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">
-                Audit Findings
-              </label>
+          {/* Right Side: AI Thinking & Result */}
+          <div className="space-y-4 sticky top-12">
+            <div className={`relative h-[556px] bg-card/30 border border-primary/20 rounded-2xl p-8 transition-all duration-500 ${loading ? 'animate-pulse-glow border-primary/50' : ''}`}>
               
-              {result ? (
-                <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
-                  <div className={`p-4 rounded-lg border font-mono text-sm ${
-                    result.includes("FAILED") || result.includes("Sensitive") 
-                    ? "bg-red-500/10 border-red-500/50 text-red-400" 
-                    : "bg-green-500/10 border-green-500/50 text-green-400"
-                  }`}>
-                    {result}
+              {/* AI Status Indicator */}
+              <div className="flex items-center space-x-3 mb-8">
+                <div className={`h-2 w-2 rounded-full ${loading ? 'bg-primary animate-ping' : 'bg-twilight/30'}`}></div>
+                <span className="text-xs font-mono text-twilight uppercase tracking-widest">{status}</span>
+              </div>
+
+              {/* Terminal Style Output */}
+              <div className="font-mono text-sm leading-7">
+                {!result && !loading && (
+                  <p className="text-slate-600 italic mt-20 text-center">Awaiting data stream for validation...</p>
+                )}
+                
+                {loading && (
+                  <div className="space-y-2">
+                    <div className="h-2 w-3/4 bg-primary/10 rounded animate-pulse"></div>
+                    <div className="h-2 w-1/2 bg-primary/10 rounded animate-pulse delay-75"></div>
+                    <div className="h-2 w-2/3 bg-primary/10 rounded animate-pulse delay-150"></div>
                   </div>
-                  <p className="mt-4 text-xs text-slate-500 italic">
-                    Timestamp: {new Date().toLocaleTimeString()}
-                  </p>
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center h-64 text-slate-600">
-                  <p className="text-sm">Waiting for input...</p>
-                </div>
-              )}
+                )}
+
+                {displayedText && (
+                  <div className={`p-6 rounded-lg border-l-4 ${displayedText.includes('🚨') ? 'border-red-500 bg-red-500/5' : 'border-green-500 bg-green-500/5'}`}>
+                    <p className="text-primaryForeground/90 whitespace-pre-wrap">{displayedText}</p>
+                    <span className="inline-block w-2 h-4 bg-primary ml-1 animate-pulse"></span>
+                  </div>
+                )}
+              </div>
+
+              {/* Decorative scan line (Right side only) */}
+              {loading && <div className="absolute inset-0 bg-primary/5 animate-scan-line pointer-events-none"></div>}
             </div>
           </div>
+
         </div>
       </div>
     </main>

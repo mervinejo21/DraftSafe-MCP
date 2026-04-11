@@ -1,94 +1,133 @@
+# 🛡️ DRAFT.SAFE
+### Autonomous AI Template Protection & Proofreading
 
-🛡️ Sentinel-MCP
+**DRAFT.SAFE** is a full-stack AI application designed to solve the "Oops, I forgot to fill in the bracket" problem. It uses the **Model Context Protocol (MCP)** and **LangGraph** to autonomously scan AI-generated drafts for unfilled placeholders like `[Insert Name]` or `<Company>`, ensuring you never send an embarrassing template again.
 
-Autonomous AI Compliance Auditor
-Sentinel-MCP is a full-stack AI application that leverages the Model Context Protocol (MCP) to audit sensitive data. It uses a LangGraph ReAct agent to autonomously decide when to trigger security scans via a custom-built MCP server, providing real-time compliance feedback through a modern Next.js dashboard.
+## ✨ The Problem solved
+When using AI to draft emails, it often leaves tags like `[City]` or `[Date]`. DRAFT.SAFE acts as an intelligent gatekeeper that:
+1. **Reads** your draft via a LangGraph Agent.
+2. **Reasons** whether the text contains template artifacts.
+3. **Validates** using a local MCP Security Server to pinpoint exactly what you missed.
 
-🚀 Technical Stack
-AI Orchestration: LangGraph (Python)
+## 🚀 Technical Stack
+- **AI Orchestration:** [LangGraph](https://www.langchain.com/langgraph) (Python)
+- **Intelligence:** Mistral Large 3
+- **Protocol:** [Model Context Protocol (MCP)](https://modelcontextprotocol.io)
+- **Backend:** FastAPI (Python)
+- **Frontend:** Next.js 15 (Tailwind CSS v4, TypeScript)
+- **Theme:** Cyberpunk Obsidian & Electric Violet
 
-Model: Mistral Large 3 (via Mistral AI API)
+## 🏗️ Architecture
+- **Next.js Dashboard:** A split-screen UI with a "Thinking" animation and typewriter output.
+- **FastAPI Bridge:** Routes text drafts to the AI agent and streams back results.
+- **LangGraph Agent:** A ReAct agent that decides when to trigger the "Placeholder Scanner."
+- **DraftSafe MCP Server:** A specialized local tool that uses regex patterns to catch template tags before they are sent.
 
-Protocol: Model Context Protocol (MCP)
+## 🛠️ Installation & Setup
 
-Backend: FastAPI (Python)
+### 1. Prerequisites
+- [uv](https://github.com/astral-sh/uv) (Fast Python Package Manager)
+- Node.js (v20+)
+- Mistral AI API Key
 
-Frontend: Next.js 15 (Tailwind CSS v4, TypeScript)
+### 2. Backend Setup
+```powershell
+# Clone and enter the repo
+git clone [https://github.com/your-username/Sentinel-MCP.git](https://github.com/your-username/Sentinel-MCP.git)
+cd Sentinel-MCP
 
-Environment: uv (Fast Python package manager)
+# Sync environment and dependencies
+uv sync
 
-🏗️ Architecture
-Next.js UI: A high-end cybersecurity dashboard for user interaction.
+# Add your Mistral API Key to .env
+echo "MISTRAL_API_KEY=your_key_here" > .env
 
-FastAPI Bridge: Handles requests and streams agentic thoughts to the frontend.
+Here is the final, corrected, and polished README.md code. I have ensured the spacing is perfect so the headers render correctly, removed any escape characters (like backslashes), and updated the content to match your new DRAFT.SAFE theme.
 
-LangGraph Agent: A ReAct agent that evaluates content and determines if the check_compliance tool is required.
+Markdown
+# 🛡️ DRAFT.SAFE
+### Autonomous AI Template Protection & Proofreading
 
-Sentinel MCP Server: A specialized server that implements local security rules and logic, exposed via the Model Context Protocol.
+**DRAFT.SAFE** is a full-stack AI application designed to solve the "Oops, I forgot to fill in the bracket" problem. It uses the **Model Context Protocol (MCP)** and **LangGraph** to autonomously scan AI-generated drafts for unfilled placeholders like `[Insert Name]` or `<Company>`, ensuring you never send an embarrassing template again.
 
-🛠️ Installation & Setup
-1. Prerequisites
-Ensure you have uv installed (modern Python manager) and Node.js (v20+).
+---
 
-2. Backend Setup
+## 🚀 Technical Stack
+
+* **AI Orchestration:** [LangGraph](https://www.langchain.com/langgraph) (Python)
+* **Model:** Mistral Large 3 (via Mistral AI API)
+* **Protocol:** [Model Context Protocol (MCP)](https://modelcontextprotocol.io)
+* **Backend:** FastAPI (Python)
+* **Frontend:** Next.js 15 (Tailwind CSS v4, TypeScript)
+* **Environment:** `uv` (Fast Python package manager)
+
+---
+
+## 🏗️ Architecture
+
+1.  **Next.js UI:** A high-end obsidian and purple dashboard with real-time "AI Thinking" animations.
+2.  **FastAPI Bridge:** Handles requests and streams agentic thoughts from the Python backend to the frontend.
+3.  **LangGraph Agent:** A ReAct agent that evaluates content and determines if the `check_placeholders` tool is required.
+4.  **DraftSafe MCP Server:** A specialized server that uses regex logic to detect unfilled template tags locally.
+
+---
+
+## 🛠️ Installation & Setup
+
+### 1. Prerequisites
+Ensure you have `uv` installed (modern Python manager) and `Node.js` (v20+).
+
+### 2. Backend Setup
+From the root directory of the project:
 
 ```powershell
 # Clone the repository
-git clone https://github.com/your-username/Sentinel-MCP.git
+git clone [https://github.com/your-username/Sentinel-MCP.git](https://github.com/your-username/Sentinel-MCP.git)
 cd Sentinel-MCP
 
 # Create environment and install dependencies
 uv sync
 
 # Setup Environment Variables
-# Create a .env file and add:
-MISTRAL_API_KEY=your_api_key_here
-```
+# Create a .env file and add your API key:
+echo "MISTRAL_API_KEY=your_api_key_here" > .env
 
-### 3\. Frontend Installation
 
-Navigate to the UI directory:
+3. Frontend Installation
+In a new terminal, navigate to the UI directory:
 
-```powershell
+PowerShell
 cd ui
 npm install
-```
+🚥 Running the Application
+You must have two separate terminals running simultaneously:
 
-## 🚥 running the Application
-
-You must have **two separate terminals** running:
-
-#### Terminal A: AI Agent Service (Backend)
-
-```powershell
+Terminal A: AI Agent Service (Backend)
+PowerShell
 # From the root directory
 uv run api.py
-```
-
-#### Terminal B: Web Dashboard (Frontend)
-
-```powershell
+Terminal B: Web Dashboard (Frontend)
+PowerShell
 # From the /ui directory
 npm run dev
-```
+The application will be available at: http://localhost:3000
 
-The application will be available at: [http://localhost:3000](https://www.google.com/search?q=http://localhost:3000)
+🛡️ Core Capabilities
+The system utilizes a custom MCP Server (server.py) to execute local logic that identifies "Template Embarrassment" risks:
 
-## 🛡️ Security Capabilities
+Placeholder Detection: Identifies [Bracketed], <Angle>, and INSERT HERE tags.
 
-The system utilizes a custom MCP Server (`server.py`) to execute local security logic that never leaves your infrastructure:
+Autonomous Reasoning: The AI agent only triggers the scanner when it detects that the user is providing a draft template.
 
-  - **PII Detection:** Identifies potentially sensitive personal information.
-  - **Credential Scanning:** Detects hardcoded passwords and secrets using pattern matching.
-  - **Autonomous Reasoning:** The AI agent only triggers these tools when it perceives a potential compliance risk in the user's input.
+Typewriter Feedback: Results are streamed back to the right-hand panel with a modern typewriter effect.
 
-## 📁 Project Structure
+📁 Project Structure
+/ui: Next.js frontend application with Black & Purple theme.
 
-  - `/ui`: Next.js frontend application.
-  - `server.py`: The MCP Server defining security tools.
-  - `orchestrator.py`: The LangGraph agent logic.
-  - `api.py`: FastAPI server for frontend-backend communication.
-  - `.env`: Environment secrets (not tracked by git).
+server.py: The MCP Server defining the scanning tools.
 
-```
-```
+orchestrator.py: The LangGraph agent and AI reasoning logic.
+
+api.py: FastAPI server for frontend-backend communication.
+
+.env: Environment secrets (ignored by Git).

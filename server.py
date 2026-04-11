@@ -1,15 +1,19 @@
+import re
+
 from fastmcp import FastMCP
 
-#Create a server named "Sentinel"
 
 mcp = FastMCP("Sentinel")
 
+
 @mcp.tool()
-def check_compliance(data: str) -> str:
-    """Checks if the given data complies with the company's policies."""
-    if "password" in data.lower():
-        return "Data contains sensitive information. Compliance check failed."
-    return "PASSED: Content is secure."
+def check_placeholders(text: str) -> str:
+    """Scan text for unfilled placeholders such as [Name] or <Company>."""
+    placeholders = re.findall(r"\[.*?\]|<.*?>", text)
+    if placeholders:
+        return f"FOUND UNFILLED TAGS: {', '.join(placeholders)}"
+    return "CLEAR: No placeholders found."
+
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")

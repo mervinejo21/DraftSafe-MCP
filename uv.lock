@@ -1455,6 +1455,7 @@ dependencies = [
     { name = "langchain-mcp-adapters" },
     { name = "langchain-mistralai" },
     { name = "langgraph" },
+    { name = "mcp" },
     { name = "python-dotenv" },
     { name = "uvicorn" },
 ]
@@ -1466,6 +1467,7 @@ requires-dist = [
     { name = "langchain-mcp-adapters", specifier = ">=0.2.2" },
     { name = "langchain-mistralai", specifier = ">=1.1.2" },
     { name = "langgraph", specifier = ">=1.1.6" },
+    { name = "mcp", specifier = ">=1.27.0" },
     { name = "python-dotenv", specifier = ">=1.2.2" },
     { name = "uvicorn", specifier = ">=0.44.0" },
 ]
