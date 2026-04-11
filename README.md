@@ -35,8 +35,8 @@ From the root directory of the project:
 
 ```powershell
 # Clone the repository
-git clone [https://github.com/mervinejo21/Sentinel-MCP.git]
-cd Sentinel-MCP
+git clone [https://github.com/mervinejo21/DraftSafe-MCP.git]
+cd DraftSafe-MCP
 
 # Create environment and install dependencies
 uv sync
