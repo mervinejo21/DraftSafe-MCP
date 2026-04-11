@@ -3,7 +3,7 @@ import re
 from fastmcp import FastMCP
 
 
-mcp = FastMCP("Sentinel")
+mcp = FastMCP("DraftSafe Server")
 
 
 @mcp.tool()
