@@ -35,7 +35,7 @@ From the root directory of the project:
 
 ```powershell
 # Clone the repository
-git clone [https://github.com/your-username/Sentinel-MCP.git](https://github.com/your-username/Sentinel-MCP.git)
+git clone [https://github.com/mervinejo21/Sentinel-MCP.git]
 cd Sentinel-MCP
 
 # Create environment and install dependencies
@@ -45,23 +45,28 @@ uv sync
 # Create a .env file and add your API key:
 echo "MISTRAL_API_KEY=your_api_key_here" > .env
 
+```
+
 3. Frontend Installation
 In a new terminal, navigate to the UI directory:
 
-PowerShell
+```powerShell
 cd ui
 npm install
+```
 🚥 Running the Application
 You must have two separate terminals running simultaneously:
 
 Terminal A: AI Agent Service (Backend)
-PowerShell
+```powerShell
 # From the root directory
 uv run api.py
+```
 Terminal B: Web Dashboard (Frontend)
-PowerShell
+```powerShell
 # From the /ui directory
 npm run dev
+```
 The application will be available at: http://localhost:3000
 
 🛡️ Core Capabilities
